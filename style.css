@@ -129,6 +129,10 @@ main {
   border-top: 1px solid #ddd;
   padding: 26px 0;
 }
+.job p { margin-bottom: 10px; }
+.job p.pdf { margin-bottom: 0; }
+.job p.pdf a { text-decoration: none; border-bottom: 1px solid #ccc; }
+.job p.pdf a:hover { border-bottom-color: #222; }
 
 /* --- dark bar at the bottom ------------------------------------------ */
 

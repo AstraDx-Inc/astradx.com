@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 /* AstraDx — one stylesheet for the whole site.
-   Keeps the original site's look: dark bars top and bottom, white middle
-   fading to grey, wide letter-spacing, content fading in on load. */
+   Sizing values are the original site's, with min/max guards so they don't
+   break down on very wide or very narrow screens. */
 
 body {
   background-color: #222;
@@ -14,29 +14,34 @@ body {
   flex-flow: column;
 }
 
+/* The home page fills the screen exactly: bar, middle, bar. The middle
+   scrolls inside itself, so the footer never leaves the viewport. */
 section {
   display: flex;
   flex-flow: column;
-  min-height: 100vh;
+  height: 100vh;
   background-color: #fff;
 }
+
+/* The careers page has real content, so it scrolls normally instead. */
+section.scroll { height: auto; min-height: 100vh; }
 
 /* --- dark bar at the top --------------------------------------------- */
 
 header {
   background-color: #222;
   line-height: 40px;
-  padding: 5px 35px;
+  padding-bottom: 5px;
+  padding-left: 35px;
+  font-size: clamp(13px, calc(48px - 2vw), 20px);
   box-shadow: 0 3px 2px #333;
+  flex: none;
 }
 header a {
   color: #999;
   font-weight: 300;
-  font-size: 15px;
-  letter-spacing: 0.12em;
   text-decoration: none;
-  margin-right: 32px;
-  transition: color 0.2s;
+  margin-right: 30px;
 }
 header a:hover { color: #fff; }
 
@@ -44,9 +49,13 @@ header a:hover { color: #fff; }
 
 main {
   flex: 2;
-  padding: clamp(45px, 9vw, 110px) 13% clamp(60px, 9vw, 110px);
-  background-image: linear-gradient(to bottom, transparent, #eee);
+  overflow: auto;
+  background: #fff;
   font-weight: 100;
+  padding-left: 13%;
+  padding-right: 13%;
+  padding-top: max(40px, calc(150px - 6vw));
+  background-image: linear-gradient(to bottom, transparent, #eee);
 }
 
 /* --- home page ------------------------------------------------------- */
@@ -55,32 +64,34 @@ main {
 
 #logo {
   display: block;
-  margin: 0 auto;
+  margin: auto;
   width: 420px;
-  max-width: 62%;
+  max-width: 75%;
+  object-fit: scale-down;
   user-select: none;
   -webkit-user-drag: none;
   animation: fade-in 1s both;
 }
 
 #title {
-  font-size: clamp(40px, 8vw, 78px);
-  letter-spacing: clamp(14px, 3.2vw, 30px);
+  font-size: clamp(34px, calc(54px + 0.7vw), 72px);
+  letter-spacing: clamp(10px, calc(20px + 0.8vw), 34px);
   /* letter-spacing adds a gap after the last letter; pull it back to centre */
-  text-indent: clamp(14px, 3.2vw, 30px);
+  text-indent: clamp(10px, calc(20px + 0.8vw), 34px);
   font-weight: 300;
   text-align: center;
-  margin: clamp(30px, 5vw, 60px) 0;
+  margin-top: max(24px, calc(70px - 2vw));
+  margin-bottom: max(24px, calc(70px - 2vw));
   animation: fade-in 2s both;
 }
 #title .dx { color: #6B747B; }
 
 #description {
   color: #6B747B;
-  font-size: clamp(21px, 3.2vw, 40px);
-  line-height: 1.4;
+  font-size: clamp(18px, calc(60px - 1.2vw), 44px);
+  line-height: 140%;
   text-align: center;
-  margin: 0;
+  margin-top: 0;
   animation: fade-in 3s both;
 }
 
@@ -89,22 +100,24 @@ main {
 .page {
   max-width: 700px;
   margin: 0 auto;
+  padding-bottom: 60px;
   animation: fade-in 1.2s both;
 }
 .page h1 {
-  font-size: clamp(32px, 5.5vw, 50px);
+  font-size: clamp(30px, calc(20px + 2vw), 46px);
   font-weight: 300;
   letter-spacing: 0.06em;
   margin: 0 0 25px;
 }
 .page h2 {
-  font-size: clamp(20px, 2.6vw, 26px);
+  font-size: clamp(19px, calc(14px + 0.8vw), 26px);
   font-weight: 400;
   color: #222;
   margin: 0 0 8px;
 }
 .page p {
   font-weight: 300;
+  font-size: clamp(15px, calc(12px + 0.4vw), 18px);
   line-height: 1.65;
   color: #444;
   margin: 0 0 20px;
@@ -114,7 +127,7 @@ main {
 
 .job {
   border-top: 1px solid #ddd;
-  padding: 28px 0;
+  padding: 26px 0;
 }
 
 /* --- dark bar at the bottom ------------------------------------------ */
@@ -123,11 +136,14 @@ footer {
   background: #222;
   color: #666;
   font-weight: 300;
-  font-size: 14px;
+  font-size: clamp(13px, calc(48px - 2vw), 20px);
   line-height: 40px;
-  padding: 5px 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 100%;
   text-align: center;
   box-shadow: 0 -3px 2px #333;
+  flex: none;
 }
 
 /* Someone may prefer no motion; respect that. */

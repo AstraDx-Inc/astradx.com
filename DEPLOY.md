@@ -65,15 +65,36 @@ Optionally add IPv6 alongside the A records:
 
 ### Do not touch these
 
-- **`MX` records.** These carry `lab@astradx.com`. Delete them and company email
-  stops, immediately and confusingly. They stay pointed at Bluehost.
+- **`MX` records.** These carry `lab@astradx.com` and point at **Google
+  Workspace** (`aspmx.l.google.com` and friends). Delete them and company mail
+  stops, immediately and confusingly.
 - **`TXT` records** — SPF, DKIM, DMARC, and any domain-verification strings.
   They belong to mail and third-party services, not to web hosting.
 
 You are moving *web* traffic only. Mail is a separate system that happens to
 live in the same DNS zone.
 
+### Recorded state before the change
+
+Captured 2026-07-28, so you can put it back:
+
+| Record | Value |
+|--------|-------|
+| `A` @ (Bluehost web server) | **`162.241.252.200`** ← the rollback value |
+| `www` | A record → `162.241.252.200` |
+| `MX` | `aspmx.l.google.com` (1), `alt1`/`alt2` (5), `alt3`/`alt4` (10) — Google Workspace |
+| `TXT` @ | `v=spf1 a mx include:websitewelcome.com ~all` |
+| `NS` | `ns1.bluehost.com`, `ns2.bluehost.com` |
+
+Only the first two rows change.
+
 ## Step 3 — Wait, then force HTTPS
+
+**There is nothing to configure for Let's Encrypt.** You don't create an account,
+generate a CSR, or upload anything. Once `astradx.com` resolves to GitHub's IPs,
+GitHub sees traffic arriving for a domain listed in `CNAME`, completes an ACME
+HTTP-01 challenge against itself, and obtains the certificate. Renewal is
+automatic and perpetual. The entire integration is "point the DNS and wait."
 
 DNS takes anywhere from ten minutes to a few hours. Check progress with:
 
@@ -120,6 +141,46 @@ goes wrong, revert the DNS records to the Bluehost IP you deleted in Step 2 —
 **write that IP down before you delete it.** That's your undo button.
 
 To roll back a bad *content* change instead, `git revert <sha> && git push`.
+
+## Google Workspace: no changes required
+
+Mail and web share a DNS zone but are otherwise unrelated systems. Google
+Workspace is located entirely through `MX` and `TXT` records; the web host is
+located through `A` and `CNAME` records. Step 2 touches only the second set.
+
+Nothing to change in the Workspace admin console. No re-verification, no
+re-adding the domain, no downtime. Users won't notice the cutover happened.
+
+### Pre-existing SPF issue — worth fixing, but separately
+
+Your current SPF record is the Bluehost default:
+
+```
+v=spf1 a mx include:websitewelcome.com ~all
+```
+
+It authorizes the web server (`a`), the inbound mail hosts (`mx`), and Bluehost's
+sending infrastructure — but **it never authorizes Google to send as your
+domain.** Google Workspace sends from ranges that `_spf.google.com` covers and
+this record does not. Some receivers are consequently softer on mail from
+`@astradx.com` than they should be.
+
+This is a pre-existing condition, not something the migration causes. It's worth
+correcting to:
+
+```
+v=spf1 include:_spf.google.com ~all
+```
+
+**Do it as its own change, on its own day** — not bundled into the web cutover.
+If mail deliverability shifts, you want exactly one variable to have moved. The
+`a` and `mx` mechanisms are safe to drop once no mail originates from the
+Bluehost server, which after this migration is the case.
+
+While you're in there: there's **no DMARC record** on the domain and no Google
+DKIM selector published. Enabling DKIM in the Workspace admin console and adding
+a monitoring-only DMARC policy (`v=DMARC1; p=none; rua=mailto:...`) is the
+standard follow-up. Again — separate change, separate day.
 
 ## Optional hardening
 

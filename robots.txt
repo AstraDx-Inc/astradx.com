@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://astradx.com/sitemap.xml

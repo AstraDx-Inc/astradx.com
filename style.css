@@ -1,89 +1,116 @@
 @charset "UTF-8";
 
-/* AstraDx — one stylesheet for the whole site. */
+/* AstraDx — one stylesheet for the whole site.
+   Keeps the original site's look: dark bars top and bottom, white middle
+   fading to grey, wide letter-spacing, content fading in on load. */
 
 body {
-  margin: 0;
-  background: #fff;
-  color: #222;
+  background-color: #222;
   font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
-  line-height: 1.6;
+  color: #222;
+  margin: 0;
+  display: flex;
+  flex-flow: column;
+}
+
+section {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+  background-color: #fff;
 }
 
 /* --- dark bar at the top --------------------------------------------- */
 
 header {
-  background: #222;
-  padding: 0 35px;
-  line-height: 50px;
+  background-color: #222;
+  line-height: 40px;
+  padding: 5px 35px;
+  box-shadow: 0 3px 2px #333;
 }
 header a {
   color: #999;
-  text-decoration: none;
   font-weight: 300;
   font-size: 15px;
-  letter-spacing: 0.1em;
-  margin-right: 30px;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  margin-right: 32px;
+  transition: color 0.2s;
 }
 header a:hover { color: #fff; }
 
-/* --- middle -------------------------------------------------------- */
+/* --- middle ---------------------------------------------------------- */
 
 main {
-  padding: 60px 8% 90px;
-  background-image: linear-gradient(to bottom, #fff, #eee);
-  min-height: calc(100vh - 160px);
-  box-sizing: border-box;
+  flex: 2;
+  padding: clamp(45px, 9vw, 110px) 13% clamp(60px, 9vw, 110px);
+  background-image: linear-gradient(to bottom, transparent, #eee);
+  font-weight: 100;
 }
 
-/* --- home page ------------------------------------------------------ */
+/* --- home page ------------------------------------------------------- */
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 
 #logo {
   display: block;
   margin: 0 auto;
-  width: 260px;
-  max-width: 60%;
+  width: 420px;
+  max-width: 62%;
+  user-select: none;
+  -webkit-user-drag: none;
+  animation: fade-in 1s both;
 }
 
 #title {
-  font-size: clamp(38px, 8vw, 76px);
-  letter-spacing: clamp(12px, 3vw, 28px);
-  /* letter-spacing adds space after the last letter; pull it back to centre */
-  text-indent: clamp(12px, 3vw, 28px);
+  font-size: clamp(40px, 8vw, 78px);
+  letter-spacing: clamp(14px, 3.2vw, 30px);
+  /* letter-spacing adds a gap after the last letter; pull it back to centre */
+  text-indent: clamp(14px, 3.2vw, 30px);
   font-weight: 300;
   text-align: center;
-  margin: 40px 0;
+  margin: clamp(30px, 5vw, 60px) 0;
+  animation: fade-in 2s both;
 }
 #title .dx { color: #6B747B; }
 
 #description {
   color: #6B747B;
-  font-size: clamp(20px, 3vw, 34px);
+  font-size: clamp(21px, 3.2vw, 40px);
   line-height: 1.4;
   text-align: center;
   margin: 0;
+  animation: fade-in 3s both;
 }
 
-/* --- careers page --------------------------------------------------- */
+/* --- careers page ---------------------------------------------------- */
 
 .page {
   max-width: 700px;
   margin: 0 auto;
+  animation: fade-in 1.2s both;
 }
 .page h1 {
-  font-size: clamp(30px, 5vw, 44px);
+  font-size: clamp(32px, 5.5vw, 50px);
   font-weight: 300;
-  letter-spacing: 0.02em;
-  margin: 0 0 30px;
+  letter-spacing: 0.06em;
+  margin: 0 0 25px;
 }
 .page h2 {
-  font-size: clamp(20px, 3vw, 26px);
+  font-size: clamp(20px, 2.6vw, 26px);
   font-weight: 400;
+  color: #222;
   margin: 0 0 8px;
 }
-.page p { margin: 0 0 20px; }
-.page a { color: #222; }
+.page p {
+  font-weight: 300;
+  line-height: 1.65;
+  color: #444;
+  margin: 0 0 20px;
+}
+.page a { color: #6B747B; }
+.page a:hover { color: #222; }
 
 .job {
   border-top: 1px solid #ddd;
@@ -95,8 +122,15 @@ main {
 footer {
   background: #222;
   color: #666;
-  font-size: 14px;
   font-weight: 300;
+  font-size: 14px;
+  line-height: 40px;
+  padding: 5px 0;
   text-align: center;
-  line-height: 50px;
+  box-shadow: 0 -3px 2px #333;
+}
+
+/* Someone may prefer no motion; respect that. */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
 }

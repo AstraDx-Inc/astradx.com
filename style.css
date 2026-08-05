@@ -149,7 +149,7 @@ main {
   color: #444;
   margin-bottom: 4px;
 }
-.job li a { color: #4A4A4A; text-decoration: none; border-bottom: 1px solid #ccc; }
+.job li a { color: #3498db; text-decoration: none; border-bottom: 1px solid #ccc; }
 .job li a:hover { color: #222; border-bottom-color: #222; }
 
 /* --- dark bar at the bottom ------------------------------------------ */

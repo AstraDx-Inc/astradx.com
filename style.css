@@ -118,7 +118,7 @@ main {
 /* The "We're hiring!" line is the loudest thing on the page. */
 .page h2.hiring {
   font-size: clamp(28px, calc(20px + 1.8vw), 42px);
-  font-weight: 700;
+  font-weight: 900;
   margin: 0 0 14px;
 }
 .page p {

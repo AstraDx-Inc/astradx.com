@@ -104,16 +104,22 @@ main {
   animation: fade-in 1.2s both;
 }
 .page h1 {
-  font-size: clamp(30px, calc(20px + 2vw), 46px);
+  font-size: clamp(20px, calc(14px + 1vw), 28px);
   font-weight: 300;
   letter-spacing: 0.06em;
-  margin: 0 0 25px;
+  margin: 0 0 18px;
 }
 .page h2 {
   font-size: clamp(19px, calc(14px + 0.8vw), 26px);
   font-weight: 400;
   color: #222;
   margin: 0 0 8px;
+}
+/* The "We're hiring!" line is the loudest thing on the page. */
+.page h2.hiring {
+  font-size: clamp(28px, calc(20px + 1.8vw), 42px);
+  font-weight: 300;
+  margin: 0 0 14px;
 }
 .page p {
   font-weight: 300;
@@ -129,10 +135,12 @@ main {
 .job { margin-top: 30px; }
 .job h2 { margin-bottom: 10px; }
 
+/* Bullets line up with roughly the third letter of the category heading
+   above them, so each list reads as sitting under its own title. */
 .job ul {
   list-style: disc;
   margin: 0;
-  padding-left: 22px;
+  padding-left: 42px;
 }
 .job li {
   font-weight: 300;
@@ -141,8 +149,8 @@ main {
   color: #444;
   margin-bottom: 4px;
 }
-.job li a { text-decoration: none; border-bottom: 1px solid #ccc; }
-.job li a:hover { border-bottom-color: #222; }
+.job li a { color: #4A4A4A; text-decoration: none; border-bottom: 1px solid #ccc; }
+.job li a:hover { color: #222; border-bottom-color: #222; }
 
 /* --- dark bar at the bottom ------------------------------------------ */
 

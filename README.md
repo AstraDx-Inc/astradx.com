@@ -48,15 +48,19 @@ Then open http://localhost:8787
 
 GitHub Pages, from the `main` branch of `AstraDx-Inc/astradx.com`.
 
-The `CNAME` file holds the domain the site answers on. It currently says
-`test.astradx.com`. To go live on the real domain, change it to `astradx.com`
-and update the DNS records at Bluehost:
+The `CNAME` file holds the canonical domain the site answers on. It says
+`www.astradx.com`. Any other domain pointed at this Pages site — such as
+`test.astradx.com` — is served too, but GitHub redirects it to the canonical
+one, so only change `CNAME` when you actually mean to move the site.
 
-- Replace the `A` record for `@` (currently `162.241.252.200`, the Bluehost
-  server — **write that down first**, it's the way back) with the four GitHub
-  addresses: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`,
-  `185.199.111.153`
-- Point `www` at `astradx-inc.github.io.` with a `CNAME` record
+DNS at Bluehost:
+
+- `www` and `test` are each a `CNAME` record pointing at
+  `astradx-inc.github.io.`
+- To also serve the bare apex `astradx.com`, replace its `A` record (currently
+  `162.241.252.200`, the Bluehost server — **write that down first**, it's the
+  way back) with the four GitHub addresses: `185.199.108.153`,
+  `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
 
 **Do not touch the `MX` or `TXT` records.** Those run Google Workspace email
 (`lab@astradx.com`) and have nothing to do with the website. HTTPS is automatic;

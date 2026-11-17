@@ -104,22 +104,23 @@ main {
   animation: fade-in 1.2s both;
 }
 .page h1 {
-  font-size: clamp(20px, calc(14px + 1vw), 28px);
+  /* font-size: clamp(20px, calc(14px + 1vw), 28px); */
+  font-size: clamp(48px, calc(36px + 1vw), 60px);
   font-weight: 300;
-  letter-spacing: 0.06em;
-  margin: 0 0 18px;
-}
-.page h2 {
-  font-size: clamp(19px, calc(14px + 0.8vw), 26px);
-  font-weight: 400;
-  color: #222;
-  margin: 0 0 8px;
+  /* letter-spacing: 0.06em; */
+  margin: 48pt 0 36px;
 }
 /* The "We're hiring!" line is the loudest thing on the page. */
-.page h2.hiring {
-  font-size: clamp(28px, calc(20px + 1.8vw), 42px);
+.page h2 {
+  font-size: clamp(24px, calc(14px + 0.8vw), 42px);
   font-weight: 900;
   margin: 0 0 14px;
+}
+.page h3 {
+  font-size: clamp(18px, calc(14px + 0.8vw), 24px);
+  font-weight: 900;
+  color: #222;
+  margin: 0 0 8px;
 }
 .page p {
   font-weight: 300;
@@ -153,8 +154,9 @@ main {
 .job li a:hover { color: #222; border-bottom-color: #222; }
 
 .highlight {
-  font-size: 0.7 em;
-  font-weight: 1000;
+  font-size: 8pt;
+  font-weight: 900;
+  color: #EA3E25;
 }
 
 
